@@ -133,3 +133,7 @@ venv/
 venv-linux/
 
 # End of https://www.gitignore.io/api/django
+.gitsecret/keys/random_seed
+!*.secret
+conf/django.env
+conf/postgres.env
