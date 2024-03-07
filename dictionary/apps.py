@@ -16,7 +16,7 @@ class DictionaryConfig(AppConfig):
 
     DOMAIN = "tidbit.network"
     PROTOCOL = "https"
-    FROM_EMAIL = "tidbit@tidbit.network"
+    FROM_EMAIL = "tidbit.communication@gmail.com"
 
     # Default options for content object counts
     TOPICS_PER_PAGE_DEFAULT = 50  # For guests only
