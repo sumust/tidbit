@@ -126,6 +126,7 @@ package-lock.json
 
 # datadump
 datadump.json
+
 #virtual environment
 
 venv/
