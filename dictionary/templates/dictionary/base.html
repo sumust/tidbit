@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="description" content="tidbit" />
     {% block metatags %}{% endblock %}
 
     {# In production, some static files should be served together. #}
@@ -17,7 +17,7 @@
 
     <script defer src="{% url 'javascript-catalog' %}"></script>
     <script defer src="{% static 'dictionary/js/dist/index.js' %}"></script>
-    <title>{% block supertitle %}{% block title %}{% endblock %} - {{ request.site.name }}{% endblock %}</title>
+    <title>tidbit</title>
 </head>
 <body class="{{ request.theme }}{% block bodyclass %}{% endblock %}" {% block bodyattr %}{% endblock %} id="{{ user.is_authenticated|yesno:"au,ua" }}">
 {% include "dictionary/includes/icons.svg" %}
