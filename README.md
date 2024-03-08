@@ -1,22 +1,9 @@
-﻿## django-sozluk, ekşi sözlük clone powered by Python
+﻿## tidbit
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE)
 
-Demo website is now available at [sozluk.me](https://sozluk.me/) \
-Check [CHANGELOG](CHANGELOG) before cloning a newer version!
-
-This is a clone of ekşi sözlük. Commonly referred as "collaborative dictionary",
-this type of social networking can be thought as "urban dictionary on steroids". Visit
-[this Wikipedia article](https://en.wikipedia.org/wiki/Ek%C5%9Fi_S%C3%B6zl%C3%BCk) to learn more about
-this type of social network.
-
-
-**This project is currently maintained.** If you want to contribute to the project or have found a bug
-or need help about deployment etc., you may contact me via
-Telegram (I use the same username there) or, better yet, [create an issue](https://github.com/realsuayip/django-sozluk/issues/new).
+Check [CHANGELOG](CHANGELOG) before cloning a newer version
 
 Check out "todo" keyword in the project files or Github issues to see the to-do's.
-
-Check out [screenshots](screenshots) folder to see current front-end in action with both the desktop and mobile views.
 
 ### Quick installation
 
