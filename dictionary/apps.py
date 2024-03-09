@@ -194,7 +194,7 @@ class DictionaryConfig(AppConfig):
     "categoryname" will affect all tabs.
     """
 
-    DISABLE_CATEGORY_CACHING = False
+    DISABLE_CATEGORY_CACHING = True
     """
     Set this to True to disable caching of all categories. The site will
     be more responsive & dynamic but much slower. If the website is low
