@@ -15,7 +15,7 @@ from dictionary.utils import time_threshold
 
 class GeneralReportView(CreateView):
     model = GeneralReport
-    fields = ("reporter_email", "category", "subject", "content")
+    fields = ("reporter_email", "subject", "content")
     template_name = "dictionary/reporting/general.html"
     success_url = reverse_lazy("home")
 
