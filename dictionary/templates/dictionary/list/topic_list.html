@@ -69,7 +69,7 @@
             {# render search form, if request.GET.ordering has value, it means there is a search #}
             <form method="get" action="{% url 'topic_list' slug='search' %}" class="search_mobile mb-3{% if request.GET.ordering %} collapse{% endif %}" id="search_form_extended_mobile">
                 {% include "dictionary/includes/forms/extended_search.html" with source="mobile" %}
-                <button type="submit" class="btn btn-django stretch">{% trans "search fabulously" %}</button>
+                <button type="submit" class="btn btn-django stretch">{% trans "search" %}</button>
             </form>
         {% endif %}
 
