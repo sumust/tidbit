@@ -4,12 +4,10 @@
 
 {% block content %}
     <h1 class="h4"><strong>{% trans "about & contact" context "titleblock" %}</strong></h1>
-    <h2 class="h5 text-muted">{% trans "about" %}</h2>
-    {% trans "tidbit is a social media platform founded by lain su (CEO) and nolan bogumill (CTO). we are headquartered in austin, texas." %}
-    <h2 class="h5 text-muted">{% trans "contact us" %}</h2>        
-    <!-- <li>{% blocktrans with faq_url="/faq/" %}please visit <a href="{{ faq_url }}">frequently asked questions</a> page before submitting reports.{% endblocktrans %}</li> -->
+    {% trans "tidbit is a text-based social media platform founded by lain su (CEO) and nolan bogumill (CTO). we are headquartered in austin, texas." %}
+    {% trans "our mission is to be your go-to platform for what is happening in the world, all in snackable bites. discover, connect, and share tidbits - every tidbit counts." %}
     {% trans "contact us below if you have any questions or concerns! if you are not logged in, please provide an e-mail address for confirmation and feedback. reports are anonymous." %}
-
+    <!-- <li>{% blocktrans with faq_url="/faq/" %}please visit <a href="{{ faq_url }}">frequently asked questions</a> page before submitting reports.{% endblocktrans %}</li> -->
     <form method="post" class="reporting-form">
         {% if not user.is_authenticated %}
             <div class="form-group">
