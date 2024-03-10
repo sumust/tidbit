@@ -3,14 +3,13 @@
 {% block title %}{% trans "contact" context "titleblock" %}{% endblock %}
 
 {% block content %}
-    <h1 class="h4"><strong>{% trans "contact" context "titleblock" %}</strong></h1>
+    <h1 class="h4"><strong>{% trans "about & contact" context "titleblock" %}</strong></h1>
+    <h2 class="h5 text-muted">{% trans "about" %}</h2>
+    {% trans "tidbit is a social media platform founded by lain su (CEO) and nolan bogumill (CTO). we are headquartered in austin, texas." %}
     <h2 class="h5 text-muted">{% trans "matters to consider" %}</h2>
     <ol class="px-4">
-        <li>{% blocktrans with faq_url="/faq/" %}please visit <a href="{{ faq_url }}">frequently asked questions</a> page before submitting reports.{% endblocktrans %}</li>
-        <li>{% trans "please state your requests and complaints in a comprehensible and concise way." %}</li>
-        <li>{% trans "we will not notify other authors if you decide to report them, this is done anonymously." %}</li>
-        <li>{% trans "provide an e-mail address for confirmation and feedback. if you are logged in already, we will use your registered e-mail address." %}</li>
-        <li>{% trans "if have multiple statements, please consider them all in a report instead of sending them in seperate reports." %}</li>
+        <!-- <li>{% blocktrans with faq_url="/faq/" %}please visit <a href="{{ faq_url }}">frequently asked questions</a> page before submitting reports.{% endblocktrans %}</li> -->
+        {% trans "contact us below if you have any questions or concerns! if you are not logged in, please provide an e-mail address for confirmation and feedback. reports are anonymous." %}
     </ol>
 
     <form method="post" class="reporting-form">
