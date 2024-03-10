@@ -38,17 +38,17 @@ class Login(LoginView):
         with suppress(AccountTerminationQueue.DoesNotExist):
             AccountTerminationQueue.objects.get(author=form.get_user()).delete()
             notifications.info(
-                self.request, _("welcome back. your account has been reactivated."), extra_tags="persistent"
+                self.request, _("welcome back! your account has been reactivated."), extra_tags="persistent"
             )
 
-        notifications.info(self.request, _("successfully logged in, dear"))
+        notifications.info(self.request, _("successfully logged in"))
         return super().form_valid(form)
 
 
 class Logout(LogoutView):
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            notifications.info(request, _("successfully logged out, dear"))
+            notifications.info(request, _("successfully logged out"))
         return super().dispatch(request)
 
 
@@ -73,8 +73,8 @@ class SignUp(FormView):
         notifications.info(
             self.request,
             _(
-                "a confirmation link has been sent to your e-mail address. by following"
-                " this link you can activate and login into your account."
+                "a confirmation link has been sent to your email address. please follow"
+                " this link to activate and log into your account."
             ),
         )
         return redirect("login")
@@ -121,8 +121,8 @@ class ResendEmailConfirmation(FormView):
         notifications.info(
             self.request,
             _(
-                "a confirmation link has been sent to your e-mail address. by following"
-                " this link you can activate and login into your account."
+                "a confirmation link has been sent to your email address. please follow"
+                " this link to activate and log into your account."
             ),
         )
         return redirect("login")
@@ -134,16 +134,16 @@ class ChangePassword(LoginRequiredMixin, PasswordChangeView):
 
     def form_valid(self, form):
         message = _(
-            "dear %(username)s, your password was changed. If you aware of this"
-            " action, there is nothing to worry about. If you didn't do such"
-            " action, you can use your e-mail to recover your account."
+            "hello %(username)s, your password was changed. If you are aware of this"
+            " action, there is nothing to worry about. If this was not you, "
+            " you can use your email to recover your account."
         ) % {"username": self.request.user.username}
 
         # Send a 'your password has been changed' message to ensure security.
         try:
             self.request.user.email_user(_("your password has been changed."), message, settings.FROM_EMAIL)
         except SMTPException:
-            notifications.error(self.request, _("we couldn't handle your request. try again later."))
+            notifications.error(self.request, _("we ran into an issue handling your request. please try again later."))
             return super().form_invalid(form)
 
         notifications.info(self.request, _("your password has been changed."))
@@ -158,7 +158,7 @@ class ChangeEmail(LoginRequiredMixin, PasswordConfirmMixin, FormView):
     def form_valid(self, form):
         send_email_confirmation(self.request.user, form.cleaned_data.get("email1"))
         notifications.info(
-            self.request, _("your e-mail will be changed after the confirmation."), extra_tags="persistent"
+            self.request, _("your email will be changed after your confirmation."), extra_tags="persistent"
         )
         return redirect(self.success_url)
 
@@ -172,8 +172,8 @@ class TerminateAccount(LoginRequiredMixin, PasswordConfirmMixin, FormView):
         message = _(
             "dear %(username)s, your account is now frozen. if you have chosen"
             " to delete your account, it will be deleted permanently after 5 days."
-            " in case you log in before this time passes, your account will be"
-            " reactivated. if you only chose to freeze your account, you may"
+            " if you log in before this time period, your account will be"
+            " reactivated. if you chose to only freeze your account, you may"
             " log in any time to reactivate your account."
         ) % {"username": self.request.user.username}
 
@@ -188,7 +188,7 @@ class TerminateAccount(LoginRequiredMixin, PasswordConfirmMixin, FormView):
         AccountTerminationQueue.objects.create(author=self.request.user, state=termination_choice)
         # Unlike logout(), this invalidates ALL sessions across devices.
         flush_all_sessions(self.request.user)
-        notifications.info(self.request, _("your request was taken. farewell."))
+        notifications.info(self.request, _("your request was processed. goodbye!"))
         return super().form_valid(form)
 
 
