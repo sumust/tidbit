@@ -17,11 +17,7 @@
         {% else %}
             <input type="hidden" name="reporter_email" value="{{ user.email }}">
         {% endif %}
-
-        <div class="form-group">
-            <label for="report_category">{{ form.category.label|i18n_lower }}</label>
-            {% render_field form.category class="form-control" id="report_category" %}
-        </div>
+        
         <div class="form-group">
             <label for="reporter_subject">{{ form.subject.label|i18n_lower }}</label>
             {% render_field form.subject|attr:"autofocus" class="form-control" id="reporter_subject" %}
