@@ -2,12 +2,12 @@
 {% load widget_tweaks i18n %}
 {% block title %}{% trans "what was my password" context "titleblock" %}{% endblock %}
 {% block content %}
-    <h1 class="h4 mb-3"><strong><a href="{% url 'login' %}">{% trans "log in" %}</a> &raquo; {% trans "what was my password" context "titleblock" %}</strong></h1>
+    <h1 class="h4 mb-3"><strong><a href="{% url 'login' %}">{% trans "log in" %}</a> &raquo; {% trans "Password Reset Request" context "titleblock" %}</strong></h1>
     <form method="post">
         {% csrf_token %}
 
         <div class="form-group">
-            <div class="bg-light p-3 mb-3 rounded" role="alert">{% trans "provide your registered e-mail address so that we can send you something to reset your password." %}</div>
+            <div class="bg-light p-3 mb-3 rounded" role="alert">{% trans "Please enter the email address associated with your account to initiate a password reset request." %}</div>
 
             {% if form.errors %}
                 <p class="text-danger">{{ form.email.errors.0 }}</p>
