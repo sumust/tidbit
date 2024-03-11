@@ -34,7 +34,7 @@ class DictionaryConfig(AppConfig):
     This anonymous user is used to hold the entries of deleted accounts.
     """
 
-    DISABLE_NOVICE_QUEUE = False
+    DISABLE_NOVICE_QUEUE = True
     """
     When set to True, users registered via 'registration form' will be authors
     immediately, skipping the necessity of writing 10 entries and waiting for
