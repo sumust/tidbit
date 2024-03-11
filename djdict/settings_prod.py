@@ -14,7 +14,6 @@ GRAPHENE = {"SCHEMA": "dictionary_graph.schema.schema"}
 
 SITE_ID = 1
 
-
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -82,7 +81,6 @@ DATABASES = {
         "PORT": os.environ.get("SQL_PORT"),
     }
 }
-
 
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_PORT = os.environ.get("EMAIL_PORT")
