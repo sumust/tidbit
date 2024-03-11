@@ -10,19 +10,17 @@ class LoginForm(AuthenticationForm):
     error_messages = {
         "invalid_login": (
             _(
-                "could not log in. make sure that you entered correct"
-                " combination of e-mail and password. your credentials are"
-                " case sensitive. make sure that you confirmed your e-mail."
+                "Login unsuccessful. Please check your email and password."
             )
         )
     }
-    remember_me = forms.BooleanField(required=False, label=_("remember me"))
+    remember_me = forms.BooleanField(required=False, label=_("Remember Me"))
 
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254,
-        help_text=_("required. in order to complete registration, provide a valid e-mail address."),
+        help_text=_("A valid email address is required for registration."),
         label=_("e-mail"),
     )
     gender = forms.ChoiceField(choices=Author.Gender.choices, label=_("gender"))
