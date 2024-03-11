@@ -14,6 +14,7 @@ GRAPHENE = {"SCHEMA": "dictionary_graph.schema.schema"}
 
 SITE_ID = 1
 
+
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
