@@ -106,7 +106,6 @@ CACHES = {
     }
 }
 
-
 LANGUAGE_CODE = "en-us"
 LANGUAGE_COOKIE_NAME = "langcode"
 LANGUAGE_COOKIE_AGE = 180 * 86400
@@ -119,7 +118,6 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 TIME_ZONE = "America/Chicago"
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
