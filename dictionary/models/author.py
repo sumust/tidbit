@@ -57,7 +57,10 @@ def usercache(initial_func=None, *, timeout=86400):
 
 class AuthorNickValidator(UnicodeUsernameValidator):
     regex = r"^[a-z0-9]+(\ [a-z0-9]+)*$"
-    message = _("unlike what you sent, an appropriate nickname would only consist of letters, numbers and spaces.")
+    message = _(
+        "Invalid nickname format. "
+        "Please ensure your nickname is 3 to 35 characters long, using only lowercase letters, numbers, and spaces."
+    )
 
 
 class Author(AbstractUser):
@@ -100,15 +103,15 @@ class Author(AbstractUser):
         max_length=35,
         unique=True,
         help_text=_(
-            "the nickname that will represent you in the site."
-            " can be 3-35 characters long, can include only letters, numbers and spaces"
+            "Choose a nickname to represent you on our site. "
+            "Your nickname should be 3 to 35 characters long, consisting of lowercase letters, numbers, and spaces."
         ),
         validators=[
             validate_username_partial,
             AuthorNickValidator(),
-            MinLengthValidator(3, _("this nickname is too tiny")),
+            MinLengthValidator(3, _("Your nickname must be at least 3 characters long.")),
         ],
-        error_messages={"unique": _("this nickname is already taken")},
+        error_messages={"unique": _("The chosen nickname has already been taken.")},
     )
 
     slug = models.SlugField(max_length=35, unique=True, editable=False)
