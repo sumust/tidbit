@@ -7,9 +7,9 @@
     <div class="bg-light rounded border p-3" role="alert">
         {% if success %}
             {% url "login" as login_url %}
-            {% blocktrans %}congratulations, your e-mail was successfully confirmed. you may <a href="{{ login_url }}">log in</a> now.{% endblocktrans %}
+            {% blocktrans %}Congratulations! Your email has been successfully confirmed. You can now <a href="{{ login_url }}">log in</a>.{% endblocktrans %}
         {% else %}
-            {% trans "we couldn't confirm your e-mail. the confirmation link was wrong or expired." %}
+            {% trans "We were unable to confirm your email. The confirmation link may be incorrect or expired." %}
         {% endif %}
     </div>
 {% endblock %}
