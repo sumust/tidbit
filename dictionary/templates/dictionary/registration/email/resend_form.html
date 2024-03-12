@@ -4,7 +4,7 @@
 {% block title %}{% trans "resend e-mail confirmation" context "titleblock" %}{% endblock %}
 {% block content %}
     <h1 class="h4 mb-3">
-        <strong><a href="{% url 'login' %}">{% trans "log in" %}</a> &raquo; {% trans "Resend Confirmation Email" context "titleblock" %}</strong></h1>
+        <strong><a href="{% url 'login' %}">{% trans "log in" %}</a> &raquo; {% trans "resend confirmation email" context "titleblock" %}</strong></h1>
 
     {% if form.non_field_errors %}
         {% for error in form.non_field_errors %}
