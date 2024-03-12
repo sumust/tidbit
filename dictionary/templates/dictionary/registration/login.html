@@ -11,7 +11,7 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-        <p class="text-danger">{% blocktrans with name=user.username %}just to let you know, you are already logged in as '{{ name }}'.{% endblocktrans %}</p>
+        <p class="text-danger">{% blocktrans with name=user.username %}you are already logged in as '{{ name }}'.{% endblocktrans %}</p>
     {% endif %}
 
     <form method="post" class="login-form">
@@ -42,8 +42,8 @@
         </div>
 
         <div class="mb-3">
-            <a href="{% url 'password_reset' %}" class="mr-3" title="{% trans "what was it?" %}">{% trans "umm, password?" %}</a>
-            <a href="{% url 'resend-email' %}">{% trans "didn't receive confirmation email" %}</a>
+            <a href="{% url 'password_reset' %}" class="mr-3" title="{% trans "what was it?" %}">{% trans "forgot your password?" %}</a>
+            <a href="{% url 'resend-email' %}">{% trans "resend confirmation email" %}</a>
         </div>
 
         <button type="submit" class="btn btn-django stretch">{% trans "log in" %}</button>
