@@ -31,9 +31,6 @@
     {% endif %}
 
     <section class="user-content">
-        {% if not user.is_novice %}
-            <form method="post" action="{% url 'image-upload' %}" class="dropzone" id="user-image-upload" style="display: none">{% csrf_token %}</form>
-        {% endif %}
 
         <section class="user-comments">
             <form method="post" id="content-form">
