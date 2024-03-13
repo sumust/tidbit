@@ -21,7 +21,7 @@ class SignUpForm(UserCreationForm):
     email = forms.EmailField(
         max_length=254,
         help_text=_("A valid email address is required for registration."),
-        label=_("e-mail"),
+        label=_("email"),
     )
     gender = forms.ChoiceField(choices=Author.Gender.choices, label=_("gender"))
     birth_date = forms.DateField(widget=SelectDateWidget(years=range(2006, 1900, -1)), label=_("birth date"))
@@ -39,33 +39,33 @@ class SignUpForm(UserCreationForm):
 
 
 class ResendEmailForm(forms.Form):
-    email = forms.EmailField(max_length=254, label=_("the e-mail address you used to register your account"))
+    email = forms.EmailField(max_length=254, label=_("the email address you used to register your account"))
 
     def clean(self):
         if not self.errors:
             try:
                 author = Author.objects.get(email=self.cleaned_data.get("email"))
                 if author.is_active:
-                    raise forms.ValidationError(gettext("this e-mail has already been confirmed."))
+                    raise forms.ValidationError(gettext("this email has already been confirmed."))
             except Author.DoesNotExist as exc:
-                raise forms.ValidationError(gettext("no such e-mail, never heard of it.")) from exc
+                raise forms.ValidationError(gettext("this email does not exist.")) from exc
 
         super().clean()
 
 
 class ChangeEmailForm(forms.Form):
-    email1 = forms.EmailField(max_length=254, label=_("new e-mail address"))
-    email2 = forms.EmailField(max_length=254, label=_("new e-mail address (again)"))
+    email1 = forms.EmailField(max_length=254, label=_("new email address"))
+    email2 = forms.EmailField(max_length=254, label=_("new email address (again)"))
     password_confirm = forms.CharField(label=_("confirm your password"), strip=False, widget=forms.PasswordInput)
 
     def clean(self):
         form_data = self.cleaned_data
 
         if form_data.get("email1") != form_data.get("email2"):
-            raise forms.ValidationError(gettext("e-mails didn't match."))
+            raise forms.ValidationError(gettext("the emails did not match."))
 
         if Author.objects.filter(email=form_data.get("email1")).exists():
-            raise forms.ValidationError(gettext("this e-mail is already in use."))
+            raise forms.ValidationError(gettext("this email is already in use."))
 
         super().clean()
 
