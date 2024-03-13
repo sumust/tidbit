@@ -26,7 +26,7 @@ class UserPreferences(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return self.request.user
 
     def form_invalid(self, form):
-        notifications.error(self.request, gettext("we couldn't handle your request. try again later."))
+        notifications.error(self.request, gettext("we couldn't handle your request, please try again later"))
         return super().form_invalid(form)
 
 
@@ -47,7 +47,7 @@ class EntryCreateMixin:
 
         if (not publishing_draft) and (self.topic.exists and self.topic.is_banned):
             # Cannot check is_banned before checking its existence.
-            notifications.error(self.request, _("we couldn't handle your request. try again later."))
+            notifications.error(self.request, _("we couldn't handle your request, please try again later"))
             return self.form_invalid(form)
 
         status = self.request.user.entry_publishable_status
@@ -68,7 +68,7 @@ class EntryCreateMixin:
                 entry.date_created = timezone.now()
                 entry.date_edited = None
             except Entry.DoesNotExist:
-                notifications.error(self.request, _("we couldn't handle your request. try again later."))
+                notifications.error(self.request, _("we couldn't handle your request, please try again later"))
                 return self.form_invalid(form)
         else:
             # Creating a brand new entry.
@@ -79,13 +79,13 @@ class EntryCreateMixin:
                 entry.topic = self.topic
             else:
                 if not self.topic.valid:
-                    notifications.error(self.request, _("curses to such a topic anyway."), extra_tags="persistent")
+                    notifications.error(self.request, _("sorry, but we couldn't find this topic"), extra_tags="persistent")
                     return self.form_invalid(form)
 
                 entry.topic = Topic.objects.create_topic(title=self.topic.title)
 
         entry.save()
-        notifications.info(self.request, _("the entry was successfully launched into stratosphere"))
+        notifications.info(self.request, _("your tidbit was shared successfully"))
         return redirect(reverse("entry-permalink", kwargs={"entry_id": entry.id}))
 
     def form_invalid(self, form):
@@ -135,7 +135,7 @@ class EntryUpdate(LoginRequiredMixin, UpdateView):
         entry = form.save(commit=False)
 
         if self.request.user.is_suspended or entry.topic.is_banned:
-            notifications.error(self.request, gettext("you lack the required permissions."))
+            notifications.error(self.request, gettext("you lack the required permissions"))
             return super().form_invalid(form)
 
         if entry.is_draft:
@@ -216,7 +216,7 @@ class CommentUpdate(CommentMixin, UpdateView):
 
         if not self.request.user.is_accessible:
             notifications.error(
-                self.request, gettext("you lack the permissions to edit this comment. want to delete it?")
+                self.request, gettext("you lack the permissions to edit this comment. do you want to delete it instead?")
             )
             return self.form_invalid(form)
 
