@@ -19,7 +19,7 @@ class UserPreferences(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Author
     form_class = PreferencesForm
     template_name = "dictionary/user/preferences/index.html"
-    success_message = _("settings are saved, dear")
+    success_message = _("your settings were saved")
     success_url = reverse_lazy("user_preferences")
 
     def get_object(self, queryset=None):
