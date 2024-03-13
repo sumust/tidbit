@@ -29,7 +29,7 @@
 
         <div class="top-bar">
 
-            <button class="content-skipper d-print-none" data-href="#main">{% trans "Skip to main content" %}</button>
+            <button class="content-skipper d-print-none" data-href="#main">{% trans "skip to main content" %}</button>
 
             {# <!--- logo --> #}
             <div class="logo">
@@ -39,11 +39,11 @@
             {# Advanced search #}
             <form method="GET" class="header-search-form" action="{% url 'topic-search' %}" id="header_search_form">
                 <div class="input-group searchbox">
-                    <input name="q" type="text" placeholder="{% trans "topic, #entry or @user." %}" class="searchbox-text form-control" id="header_search" form="header_search_form" aria-label="{% trans "Search term" %}">
+                    <input name="q" type="text" placeholder="{% trans "topic, #entry or @user" %}" class="searchbox-text form-control" id="header_search" form="header_search_form" aria-label="{% trans "search term" %}">
                     <div class="input-group-append">
 
                         <button type="button" class="btn dropbtn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">{% trans "Open advanced search menu" %}</span>
+                            <span class="sr-only">{% trans "advanced search" %}</span>
                         </button>
 
                         <button class="btn searchbtn" type="submit" title="{% trans "Search" %}">
@@ -118,12 +118,6 @@
                             </svg>
                             {% trans "settings" %}
                         </a>
-                        <a class="dropdown-item" href="{% url 'category_list' %}">
-                            <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#bookmarks"></use>
-                            </svg>
-                            {% trans "channels" %}
-                        </a>
                         <a class="dropdown-item" href="{% url 'people' %}">
                             <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                 <use href="#people"></use>
@@ -164,17 +158,11 @@
                     <li class="key-clickable" tabindex="0" id="usermenu_mobile" data-toggle="dropdown">
                         <svg fill="currentColor" width="16" height="24" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                             <use href="#more"></use>
-                            <title>{% trans "Account Menu" %}</title>
+                            <title>{% trans "user menu" %}</title>
                         </svg>
                     </li>
 
                     <div class="usermenu-dropdown dropdown-menu icon-assisted" aria-labelledby="usermenu_mobile">
-                        <a href="{% url "category_list" %}" class="dropdown-item">
-                            <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#bookmarks"></use>
-                            </svg>
-                            {% trans "channels" %}
-                        </a>
                         <a href="{% url "topic_list" slug="drafts" %}" class="dropdown-item">
                             <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <use href="#saved"></use>
@@ -197,7 +185,7 @@
                             <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                 <use href="#people"></use>
                             </svg>
-                            {% trans "following/blocked" %}
+                            {% trans "followed/blocked users" %}
                         </a>
                         <div class="dropdown-divider"></div>
                         <a href="{% url "logout" %}" class="dropdown-item">
@@ -221,9 +209,8 @@
             <ul class="desktop-only">
 
                 {% render_header_link 'today' %}
-                {% render_header_link 'popular' %}
-                {% render_header_link 'top' %}
-                {% render_header_link 'acquaintances' %}
+                {% render_header_link 'popular tidbits' %}
+                {% render_header_link 'top tidbits' %}
                 {% render_header_link 'drafts' %}
                 {% render_header_link 'followup tidbits' %}
 
