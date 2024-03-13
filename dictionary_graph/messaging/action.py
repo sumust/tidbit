@@ -71,22 +71,22 @@ class ComposeMessage(Mutation):
     def mutate(_root, info, body, recipient):
         sender = info.context.user
         if len(body) < 3:
-            return ComposeMessage(feedback=_("can't you write down something more?"))
+            return ComposeMessage(feedback=_("your message must be at least 3 characters long."))
 
         try:
             recipient_ = Author.objects.get(username=recipient)
             validate_user_text(body)
         except Author.DoesNotExist:
-            return ComposeMessage(feedback=_("no such person though"))
+            return ComposeMessage(feedback=_("this user does not exist"))
         except ValidationError as error:
             return ComposeMessage(feedback=error.message)
 
         sent = Message.objects.compose(sender, recipient_, body)
 
         if not sent:
-            return ComposeMessage(feedback=_("we couldn't send your message"))
+            return ComposeMessage(feedback=_("we were unable to send your message"))
 
-        return ComposeMessage(feedback=_("your message has been successfully sent"))
+        return ComposeMessage(feedback=_("your message has been sent successfully"))
 
 
 class DeleteMessage(Mutation):
@@ -108,7 +108,7 @@ class DeleteMessage(Mutation):
         ):
             # Sender deleted message immediately, remove message content for target user.
             # Translators: Include an emoji
-            message.body = _("this message was deleted 🤷‍")
+            message.body = _("this message was deleted")
             message.save(update_fields=["body"])
             immediate = True
 
