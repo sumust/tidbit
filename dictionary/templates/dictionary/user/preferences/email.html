@@ -11,16 +11,16 @@
     {% endif %}
 
     <div class="border rounded p-3 bg-light mb-3">
-        <strong style="font-weight: 600; margin-right: .35em;">{% trans "current e-mail in use:" %}</strong>
+        <strong style="font-weight: 600; margin-right: .35em;">{% trans "current email:" %}</strong>
         <span>{{ user.email }}</span>
     </div>
 
     {% if not user.email_confirmed %}
         <div class="alert-info p-3 mb-3 rounded" role="alert">
         {% blocktrans trimmed %}
-            a confirmation link has been sent to your new e-mail address. by following
-            this link you can complete your e-mail change. if you didn't receive any mails,
-            you can fill the form below again.
+            a confirmation link has been sent to your new email address. please follow
+            this link to complete your email change. if you did not receive an email,
+            please resubmit the form below again.
         {% endblocktrans %}
         </div>
     {% endif %}
@@ -50,7 +50,7 @@
         </div>
         {% csrf_token %}
 
-        <small class="fs-90">{% trans "a confirmation link will be sent to the new e-mail address." %}</small>
+        <small class="fs-90">{% trans "a confirmation link will be sent to your new email address." %}</small>
         <button class="btn btn-django stretch mt-3">{% trans "change e-mail" %}</button>
     </form>
 {% endblock %}
