@@ -25,7 +25,7 @@
 <header class="page_header">
 
     <div class="container">
-        <div class="small-device-alert">{% trans "the device is too small!" %}</div>
+        <div class="small-device-alert">{% trans "your device is too small!" %}</div>
 
         <div class="top-bar">
 
@@ -152,7 +152,6 @@
                 {% render_header_link "today" %}
                 {% render_header_link "popular" %}
                 {% render_header_link "top" %}
-                {% render_header_link "acquaintances" %}
 
                 {% if user.is_authenticated %}
                     <li class="key-clickable" tabindex="0" id="usermenu_mobile" data-toggle="dropdown">
