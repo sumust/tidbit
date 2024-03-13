@@ -148,7 +148,7 @@ class EntryUpdate(LoginRequiredMixin, UpdateView):
             entry.is_draft = False
             entry.date_created = timezone.now()
             entry.date_edited = None
-            notifications.info(self.request, gettext("the entry was successfully launched into stratosphere"))
+            notifications.info(self.request, gettext("your tidbit was shared successfully"))
         else:
             entry.date_edited = timezone.now()
 
@@ -176,7 +176,7 @@ class CommentMixin(LoginRequiredMixin, SuccessMessageMixin):
 
 
 class CommentCreate(CommentMixin, CreateView):
-    success_message = _("the comment was successfully launched into stratosphere")
+    success_message = _("your comment was shared successfully")
     entry = None
 
     def dispatch(self, request, *args, **kwargs):
@@ -216,7 +216,7 @@ class CommentUpdate(CommentMixin, UpdateView):
 
         if not self.request.user.is_accessible:
             notifications.error(
-                self.request, gettext("you lack the permissions to edit this comment. you might as well delete it?")
+                self.request, gettext("you lack the permissions to edit this comment. want to delete it?")
             )
             return self.form_invalid(form)
 
