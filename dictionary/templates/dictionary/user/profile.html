@@ -10,12 +10,7 @@
     {% load humanize %}
     <section class="user-info">
         <h1 class="h4">
-            <a class="profile-username" href="{% url 'topic-search' %}?q={{ profile.username }}">{{ profile.username }}</a>
-            {% with gen=profile.generation %}
-                {% if gen %}
-                    <small class="ml-2" style="font-size: .5em; vertical-align: middle">{% blocktrans with user_type=profile.is_novice|yesno:_("novice,author") gen_ordinal=gen|ordinal %}{{ gen_ordinal }} generation {{ user_type }}{% endblocktrans %}</small>
-                {% endif %}
-            {% endwith %}
+            <a class="profile-username" href="{% url 'topic-search' %}?q={{ profile.username }}">{{ profile.username }}</a> 
         </h1>
 
         {% if user.is_authenticated and user != profile %}
@@ -39,47 +34,29 @@
             {% url "general-report" as report_url %}
             <div class="rounded bg-light mb-3 p-3" role="alert">
                 {% blocktrans trimmed with date=profile.suspended_until %}
-                    Your account was suspended until the date {{ date }}. For a detailed information
-                    check the private message we sent to you. If you think something is wrong, you can use this
-                    <a href="{{ report_url }}">report form</a> to contact us.
+                    Your account has been suspended until {{ date }}. For additional information,
+                    please check the private message we sent to you. To appeal your suspension, you can use this
+                    <a href="{{ report_url }}">report form</a> to contact us anytime.
                 {% endblocktrans %}
             </div>
         {% endif %}
 
         <ul class="user-stats mb-2">
-            <li title="{% trans "total number of entries" %}">{{ profile.entry_count }}</li>
-            <li title="{% trans "number of entries last month" %}">{{ profile.entry_count_month }}</li>
-            <li title="{% trans "number of entries last week" %}">{{ profile.entry_count_week }}</li>
-            <li title="{% trans "number of entries last 24 hours" %}">{{ profile.entry_count_day }}</li>
-            <li class="nobullet" title="{% trans "latest entry when?" %}">{{ profile.last_entry_date|naturaltime|default:_("never") }}</li>
+            <li title="{% trans "total tidbit count" %}">{{ profile.entry_count }}</li>
+            <li class="nobullet" title="{% trans "most recent tidbit" %}">{{ profile.last_entry_date|naturaltime|default:_("never") }}</li>
 
             {% if novice_queue %}
                 <li class="float-right nobullet">{% blocktrans with queue_ordinal=novice_queue|ordinal %}you are the {{ queue_ordinal }} person in the novice list.{% endblocktrans %}</li>
             {% endif %}
 
             <li class="profile-badges nobullet d-block mt-2">
-                {% if profile.is_novice %}
-                    <a class="badge-item" href="{% url 'topic-unicode-url' unicode_string=_("novice") %}">{% trans "novice" %}</a>
-                {% endif %}
 
                 {% if profile.is_suspended %}
                     {% blocktrans asvar curse_time with time=profile.suspended_until|naturaltime %}throughout {{ time }}{% endblocktrans %}
-                    <a class="badge-item" href="{% url 'topic-unicode-url' unicode_string=_("cursed") %}" title="{{ curse_time }}">{% trans "cursed" %}</a>
-                {% endif %}
-
-                {% if profile.entry_count >= 1000 %}
-                    <a class="badge-item" href="{% url "topic-unicode-url" unicode_string=_("zealous") %}" title="{% trans "has at least 1000 entries" %}">{% trans "zealous" %}</a>
+                    <a class="badge-item" href="{% url 'topic-unicode-url' unicode_string=_("cursed") %}" title="{{ curse_time }}">{% trans "suspended" %}</a>
                 {% endif %}
 
                 {% has_perm profile "dictionary.can_suggest_categories" as can_suggest_categories %}
-
-                {% if can_suggest_categories %}
-                    <a class="badge-item" href="{% url "topic-unicode-url" unicode_string=_("assorter") %}" title="{% trans "can suggest categories to topics" %}">{% trans "assorter" %}</a>
-                {% endif %}
-
-                {% for badge in profile.badges.all %}
-                    <a title="{{ badge.description }}" class="badge-item" {% if badge.url %} href="{{ badge.url }}" target="_blank" {% else %}href="{% url 'topic-unicode-url' unicode_string=badge.name %}"{% endif %}>{{ badge.name }}</a>
-                {% endfor %}
 
                 {% if profile.karma_flair %}
                     <span>{{ profile.karma_flair }}</span>
@@ -106,20 +83,17 @@
 
         <nav class="user-stats-nav" aria-label="{% trans "Profile navigation menu" %}">
             <ul class="m-0 p-0">
-                <li {% if tab.name == "latest" %}class="active"{% endif %}><a href="{{ profile.get_absolute_url }}">{% trans "entries" %}</a></li>
-                <li {% if tab.name == "favorites" %}class="active"{% endif %}><a href="{% url 'user-profile-stats' profile.slug "favorites" %}">{% trans "favorites" %}</a></li>
+                <li {% if tab.name == "latest" %}class="active"{% endif %}><a href="{{ profile.get_absolute_url }}">{% trans "tidbits" %}</a></li>
+                <li {% if tab.name == "favorites" %}class="active"{% endif %}><a href="{% url 'user-profile-stats' profile.slug "favorites" %}">{% trans "favorite tidbits" %}</a></li>
 
                 <li class="profile-stat-expand{% if tab.name != "latest" and tab.name != "favorites" %} active{% endif %}">
-                    <a class="expand" role="button" tabindex="0" id="more-tabs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "statistics" %}</a>
+                    <a class="expand" role="button" tabindex="0" id="more-tabs-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{% trans "activity" %}</a>
                     <div class="dropdown-menu" aria-labelledby="more-tabs-dropdown" data-orientation="bottom-start">
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "popular" %}">{% trans "most favorited" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "recentlyvoted" %}">{% trans "recently voted" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "liked" %}">{% trans "most liked" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "weeklygoods" %}">{% trans "attracting entries of this week" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "beloved" %}">{% trans "beloved entries" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "authors" %}">{% trans "favorite authors" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "wishes" %}">{% trans "wishes" %}</a>
-                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "channels" %}">{% trans "contributed channels" %}</a>
+                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "popular" %}">{% trans "most favorited tidbits" %}</a>
+                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "liked" %}">{% trans "most liked tidbits" %}</a>
+                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "recentlyvoted" %}">{% trans "tidbits with recent engagement" %}</a>
+                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "authors" %}">{% trans "favorite users" %}</a>
+                        <a class="dropdown-item" href="{% url 'user-profile-stats' profile.slug "channels" %}">{% trans "top channels" %}</a>
                     </div>
                 </li>
             </ul>
@@ -137,7 +111,7 @@
                 <a role="button" tabindex="0" href="{% url 'topic_list' slug='userstats' %}?user={{ profile.slug }}&tab={{ tab.name }}" data-lf-slug="userstats" data-tab="{{ tab.name }}" data-lf-extra='{"user":"{{ profile.slug }}"}'>
                     <svg fill="currentColor" viewBox="0 0 16 16" width="24" height="24">
                         <use href="#lshift"></use>
-                        <title>{% trans "navigate to the topic list" %}</title>
+                        <title>{% trans "navigate to topics" %}</title>
                     </svg>
                 </a>
             {% endif %}
@@ -193,7 +167,7 @@
             {% endif %}
 
         {% else %}
-            <small>{% trans "nothing here" %}</small>
+            <small>{% trans "nothing to see here" %}</small>
         {% endif %}
 
     {% endwith %}
