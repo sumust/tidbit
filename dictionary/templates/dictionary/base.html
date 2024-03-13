@@ -172,7 +172,7 @@
                             <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                 <use href="#side-note"></use>
                             </svg>
-                            {% trans "followup tidbits" %}
+                            {% trans "followups" %}
                         </a>
                         <a href="{% url "topic_list" slug="search" %}" class="dropdown-item">
                             <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
@@ -211,7 +211,7 @@
                 {% render_header_link 'popular' %}
                 {% render_header_link 'top' %}
                 {% render_header_link 'drafts' %}
-                {% render_header_link 'followup tidbits' %}
+                {% render_header_link 'followups' %}
 
                 {% for category in nav_categories|slice:":4" %}
                     <li {% if left_frame.slug == category.slug %}class="active"{% endif %} data-lf-slug="{{ category.slug }}">
