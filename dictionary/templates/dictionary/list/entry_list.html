@@ -34,6 +34,7 @@
                     {% elif mode == "following" %}<small><strong>[{% trans "activity" %}]</strong></small>
                     {% elif mode == "recent" %}<small><strong>[{% trans "followup tidbits" %}]</strong></small>
                     {% elif mode == "answered" %}<small><strong>[{% trans "with replies" %}]</strong></small>
+                    {% endif %}
                 </div>
 
                     {% if topic.is_pinned %}
