@@ -9,9 +9,7 @@
     {% url 'topic_list' "uncategorized" as uncategorized_url %}
 
     {% blocktrans trimmed with today_attr=user.is_authenticated|yesno:'data-lf-slug="today",'|safe uncategorized_attr='data-lf-slug="uncategorized"' %}
-        <p>the complete list of channels that classify the topics with general subjects. in
-            <a {{ today_attr }} href="{{ today_url }}">today</a> only the topics with channels you follow and
-            <a {{ uncategorized_attr }} href="{{ uncategorized_url }}">topics with no channels</a> are listed.</p>
+        <p>we will be adding channels soon so keep an eye out!</p>
     {% endblocktrans %}
 
     <ul class="category-list-all p-0">
