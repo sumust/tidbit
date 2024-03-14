@@ -9,7 +9,7 @@
     {% url 'topic_list' "uncategorized" as uncategorized_url %}
 
     {% blocktrans trimmed with today_attr=user.is_authenticated|yesno:'data-lf-slug="today",'|safe uncategorized_attr='data-lf-slug="uncategorized"' %}
-        <p>we will be adding channels soon so keep an eye out!</p>
+        <p>we will be adding channels to group topics soon, so keep an eye out!</p>
     {% endblocktrans %}
 
     <ul class="category-list-all p-0">
