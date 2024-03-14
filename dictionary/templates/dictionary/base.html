@@ -277,7 +277,7 @@
                     </button>
                 </header>
                 <ul>
-                    <li><a href="{% url 'general-report' %}">{% trans "contact" %}</a></li>
+                    <li><a href="{% url 'general-report' %}">{% trans "contact & about" %}</a></li>
                     <li><a href="{% url 'announcements-index' %}">{% trans "announcements" %}</a></li>
                     {% for page in flatpages|order_by:"-metaflatpage__weight url" %}
                         <li><a href="{{ page.url }}">{{ page.title }}</a></li>
