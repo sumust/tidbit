@@ -25,17 +25,17 @@ function insertMeta (type) {
 
     switch (type) {
         case "ref":
-            fmt = [gettext("target topic, #entry or @author to reference:"), text => `(${pgettext("editor", "see")}: ${text})`]
+            fmt = [gettext("topic or @user to reference in see tag:"), text => `(${pgettext("editor", "see")}: ${text})`]
             break
         case "thingy":
-            fmt = [gettext("target topic, #entry or @author to thingy:"), text => `\`${text}\``]
+            fmt = [gettext("topic or @user to reference:"), text => `\`${text}\``]
             break
         case "swh":
-            fmt = [gettext("what should be referenced in asterisk?"), text => `\`:${text}\``]
+            fmt = [gettext("topic to reference in asterisk:"), text => `\`:${text}\``]
             break
         case "spoiler": {
             const spoiler = gettext("spoiler")
-            fmt = [gettext("what to write between spoiler tags?"), text => `--\`${spoiler}\`--\n${text}\n--\`${spoiler}\`--`]
+            fmt = [gettext("spoiler content:"), text => `--\`${spoiler}\`--\n${text}\n--\`${spoiler}\`--`]
             break
         }
     }
