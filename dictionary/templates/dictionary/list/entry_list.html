@@ -31,19 +31,15 @@
                     <h1 class="d-inline m-0"><a href="{{ topic.get_absolute_url }}">{{ topic.title }}</a></h1>
                     {% if mode == "search" %}<small>[{% trans "search keywords" %}: <strong>{{ request.GET.keywords.strip }}</strong>]</small>
                     {% elif mode == "links" %}<small><strong>[{% trans "links" %}]</strong></small>
-                    {% elif mode == "history" %}<small><strong>[{% trans "today in history" %}: </strong>{{ request.GET.year.strip }}]</small>
-                    {% elif mode == "novices" %}<small><strong>[{% trans "novices" %}]</strong></small>
                     {% elif mode == "following" %}<small><strong>[{% trans "activity" %}]</strong></small>
-                    {% elif mode == "recent" %}<small><strong>[{% trans "followups" %}]</strong></small>
-                    {% elif mode == "acquaintances" %}<small><strong>[{% trans "acquaintances" %}]</strong></small>
+                    {% elif mode == "recent" %}<small><strong>[{% trans "followup tidbits" %}]</strong></small>
                     {% elif mode == "answered" %}<small><strong>[{% trans "with replies" %}]</strong></small>
-                    {% elif mode == "images" %}<small><strong>[{% trans "images" %}]</strong></small>{% endif %}
                 </div>
 
                     {% if topic.is_pinned %}
                         <svg style="transform: scaleX(-1);" fill="currentColor" width="16" height="25" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                             <use href="#pin"></use>
-                            <title>{% trans "This topic is pinned" %}</title>
+                            <title>{% trans "this topic is pinned" %}</title>
                         </svg>
                     {% endif %}
                 </div>
@@ -66,7 +62,7 @@
                     <div class="title_sub">
                     <span class="nice-filter">{% trans "nice" %}:&nbsp;&nbsp;<a title="{% trans "most liked entries of all time" %}" href="{{ topic.get_absolute_url }}{% if mode != "nice" %}?a=nice{% endif %}" {% if mode == "nice" %}class="active" {% endif %}>{% trans "all" context "nicefilter" %}</a>
                         <span class="sep">|</span>
-                        <a title="{% trans "most liked entries of today" %}" href="{{ topic.get_absolute_url }}{% if mode != "nicetoday" %}?a=nicetoday{% endif %}" {% if mode == "nicetoday" %}class="active" {% endif %}>{% trans "today" %}</a>
+                        <a title="{% trans "most liked tidbits of today" %}" href="{{ topic.get_absolute_url }}{% if mode != "nicetoday" %}?a=nicetoday{% endif %}" {% if mode == "nicetoday" %}class="active" {% endif %}>{% trans "today" %}</a>
                     </span>
 
                         <a data-toggle="dropdown" class="expand topic-search-expander" role="button" tabindex="0">{% trans "search in topic" %}</a>
@@ -92,25 +88,13 @@
                                     {% trans "with replies" %}
                                 </a>
                             {% endif %}
-                            <a class="dropdown-item" href="{{ topic.get_absolute_url }}?a=images">
-                                <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                    <use href="#images"></use>
-                                </svg>
-                                {% trans "images" %}
-                            </a>
                             {% if user.is_authenticated %}
                                 <a class="dropdown-item" href="{{ topic.get_absolute_url }}?a=search&keywords=@{{ user.username }}">
                                     <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
                                         <use href="#person"></use>
                                     </svg>
-                                    {% trans "my entries" %}
-                                </a>
-                                <a class="dropdown-item" href="{{ topic.get_absolute_url }}?a=acquaintances">
-                                    <svg fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                        <use href="#people"></use>
-                                    </svg>
-                                    {% trans "acquaintances" %}
-                                </a>
+                                    {% trans "my tidbits" %}
+                                </a>                              
                             {% endif %}
 
                             <a class="dropdown-item px-3">
@@ -178,9 +162,9 @@
                                 {# topic has entries but parameters returned no corresponding entries #}
                                 <p class="mt-2">
                                     {% if mode == "novices" %}
-                                        <span>{% trans "there has been no entries written by novices today." %}</span>
+                                        <span>{% trans "there has been no tidbits written today." %}</span>
                                     {% elif mode == "regular" %}
-                                        <span>{% trans "this topic has no entries written by <u>authors</u>." %}</span>
+                                        <span>{% trans "this topic has no tidbits written by <u>users</u>." %}</span>
                                     {% else %}
                                         <span>{% trans "no suitable entries were found with the criteria you specified." %}</span>
                                     {% endif %}
@@ -206,7 +190,7 @@
 
                 {% else %}
                     {# Topic does exist but has no entries #}
-                    <p>{% trans "no such thing known to humankind." %}</p>
+                    <p>{% trans "no tidbits exist for this topic." %}</p>
 
                     {% if not banned %}
                         {% include "dictionary/includes/forms/wish.html" %}
@@ -222,7 +206,7 @@
                 <p>{% trans "no such thing known to humankind." %}</p>
 
                 {% if not valid %}
-                    <p>{% trans "curses to such a topic anyway." %}</p>
+                    <p>{% trans "this topic does not exist." %}</p>
                 {% else %}
                     {% include "dictionary/includes/forms/wish.html" %}
                 {% endif %}
@@ -276,7 +260,7 @@
                         {% render_field form.content placeholder=text_placeholder id="user_content_edit" class="entry_editor form-control allowsave expandable" rows="5" spellcheck="true" aria-label=area_label %}
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
-                                <button type="button" class="btn draft-async px-0" data-title="{{ topic.title }}">{% trans "keep this as draft" %}</button>
+                                <button type="button" class="btn draft-async px-0" data-title="{{ topic.title }}">{% trans "save draft" %}</button>
                             </div>
                             <button type="submit" class="btn btn-django-link"{% if user.is_suspended %} title="{% trans "you lack the required permissions." %}" disabled{% endif %}>{% trans "publish" %}</button>
                         </div>
@@ -296,7 +280,6 @@
         {% with categories=topic.category.all %}
             {% if categories or perms.dictionary.can_suggest_categories %}
                 <section class="topic-categories-list">
-                    <h2>{% trans "belonging channels" %}</h2>
                     {% if categories %}
                         <ul>
                             {% for category in categories %}
