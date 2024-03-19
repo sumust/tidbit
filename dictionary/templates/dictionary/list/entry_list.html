@@ -61,7 +61,7 @@
                 {% if populated %}
                     <div class="lower d-flex justify-content-between align-items-center{{ is_paginated|yesno:" paginated," }}">
                     <div class="title_sub">
-                    <span class="nice-filter">{% trans "nice" %}:&nbsp;&nbsp;<a title="{% trans "most liked entries of all time" %}" href="{{ topic.get_absolute_url }}{% if mode != "nice" %}?a=nice{% endif %}" {% if mode == "nice" %}class="active" {% endif %}>{% trans "all" context "nicefilter" %}</a>
+                    <span class="nice-filter">{% trans "nice" %}:&nbsp;&nbsp;<a title="{% trans "most liked tidbits of all time" %}" href="{{ topic.get_absolute_url }}{% if mode != "nice" %}?a=nice{% endif %}" {% if mode == "nice" %}class="active" {% endif %}>{% trans "all" context "nicefilter" %}</a>
                         <span class="sep">|</span>
                         <a title="{% trans "most liked tidbits of today" %}" href="{{ topic.get_absolute_url }}{% if mode != "nicetoday" %}?a=nicetoday{% endif %}" {% if mode == "nicetoday" %}class="active" {% endif %}>{% trans "today" %}</a>
                     </span>
@@ -163,9 +163,9 @@
                                 {# topic has entries but parameters returned no corresponding entries #}
                                 <p class="mt-2">
                                     {% if mode == "novices" %}
-                                        <span>{% trans "there has been no tidbits written today." %}</span>
+                                        <span>{% trans "there have been no tidbits posted today" %}</span>
                                     {% elif mode == "regular" %}
-                                        <span>{% trans "this topic has no tidbits written by <u>users</u>." %}</span>
+                                        <span>{% trans "this topic has no tidbits posted by <u>users</u>" %}</span>
                                     {% else %}
                                         <span>{% trans "no suitable entries were found with the criteria you specified." %}</span>
                                     {% endif %}
@@ -191,7 +191,7 @@
 
                 {% else %}
                     {# Topic does exist but has no entries #}
-                    <p>{% trans "no tidbits exist for this topic." %}</p>
+                    <p>{% trans "no tidbits exist for this topic" %}</p>
 
                     {% if not banned %}
                         {% include "dictionary/includes/forms/wish.html" %}
@@ -204,10 +204,10 @@
                     <h1 class="topic-title"><a href="{% url 'topic-search' %}?q={{ topic.title }}">{{ topic.title }}</a></h1>
                 </header>
 
-                <p>{% trans "no such thing known to humankind." %}</p>
+                <p>{% trans "nothing to find here" %}</p>
 
                 {% if not valid %}
-                    <p>{% trans "this topic does not exist." %}</p>
+                    <p>{% trans "this topic does not exist" %}</p>
                 {% else %}
                     {% include "dictionary/includes/forms/wish.html" %}
                 {% endif %}
@@ -231,7 +231,7 @@
 
                         {% url "topic_list" slug="drafts" as drafts_url %}
                         {% blocktrans trimmed with drafts_attr='data-lf-slug="drafts"' title=topic.title %}
-                            <span>you have <a {{ drafts_attr }} href="{{ drafts_url }}">drafted</a> entries belonging to <strong>{{ title }}</strong>:</span>
+                            <span>you have <a {{ drafts_attr }} href="{{ drafts_url }}">drafted</a> tidbits for <strong>{{ title }}</strong>:</span>
                         {% endblocktrans %}
                     </div>
 
@@ -257,13 +257,13 @@
                             {# Notice: This string gets escaped in render_field! #}
                             {% blocktrans asvar text_placeholder with title=topic.title %}express your thoughts on {{ title }}..{% endblocktrans %}
                         {% endautoescape %}
-                        {% trans "Entry content area" as area_label %}
+                        {% trans "tidbit content area" as area_label %}
                         {% render_field form.content placeholder=text_placeholder id="user_content_edit" class="entry_editor form-control allowsave expandable" rows="5" spellcheck="true" aria-label=area_label %}
                         <div class="d-flex align-items-center justify-content-between">
                             <div>
                                 <button type="button" class="btn draft-async px-0" data-title="{{ topic.title }}">{% trans "save draft" %}</button>
                             </div>
-                            <button type="submit" class="btn btn-django-link"{% if user.is_suspended %} title="{% trans "you lack the required permissions." %}" disabled{% endif %}>{% trans "publish" %}</button>
+                            <button type="submit" class="btn btn-django-link"{% if user.is_suspended %} title="{% trans "you lack the required permissions." %}" disabled{% endif %}>{% trans "post" %}</button>
                         </div>
                     </form>
                 </section>
@@ -294,7 +294,7 @@
                             {% endfor %}
                         </ul>
                     {% else %}
-                        <span>{% trans "this topic is yet to be classified" %}</span>
+                        <span>{% trans "this topic has not been classified yet" %}</span>
                     {% endif %}
 
                     {% if not user.is_novice and perms.dictionary.can_suggest_categories and topic.allow_suggestions %}
@@ -320,7 +320,7 @@
                                                 <button type="button" class="btn btn-sm{{ category.down|yesno:" btn-django-link," }}">
                                                     <svg fill="currentColor" width="10" height="10" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                                         <use href="#down"></use>
-                                                        <title>{% trans "put down" %}</title>
+                                                        <title>{% trans "cancel" %}</title>
                                                     </svg>
                                                 </button>
                                             </div>
