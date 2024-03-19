@@ -120,7 +120,7 @@ msgid "see"
 msgstr "bkz"
 
 #: .\static\dictionary\js\dist\index.js:1 .\static\dictionary\js\editor.js:31
-msgid "target topic, #entry or @author to thingy:"
+msgid "link to tidbit, user or topic"
 msgstr "hangi başlık veya #entry için hede oluşturulacak?"
 
 #: .\static\dictionary\js\dist\index.js:1 .\static\dictionary\js\editor.js:34
